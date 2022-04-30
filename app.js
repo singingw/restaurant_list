@@ -68,3 +68,30 @@ app.post('/restaurants/:restaurant_id/delete', (req, res) => {
     .then((restaurant) => res.redirect('/'))
     .catch(error => console.log(error))
 })
+
+app.get('/restaurants/:restaurant_id/edit', (req, res) => {
+  const id = req.params.restaurant_id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
+})
+app.post('/restaurants/:restaurant_id/edit', (req, res) => {
+  const id = req.params.restaurant_id
+  const updatedRest = req.body
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant.name = updatedRest.name
+      restaurant.name_en = updatedRest.name_en
+      restaurant.category = updatedRest.category
+      restaurant.image = updatedRest.image
+      restaurant.location = updatedRest.location
+      restaurant.phone = updatedRest.phone
+      restaurant.google_map = updatedRest.google_map
+      restaurant.rating = updatedRest.rating
+      restaurant.description = updatedRest.description
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/${id}`))
+    .catch(error => console.log(error))
+})
