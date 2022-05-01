@@ -40,19 +40,23 @@ app.post('/restaurants', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
-/**
+
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const restaurants = restaurantList.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase())
+  const keyword = req.query.keyword.trim()
+  // $regex 提供了在查詢 (query) 中找到符合的字串
+  // $options: 'i' 代表大小寫皆可
+  // $or 代表任一條件符合皆可
+  Restaurant.find({
+    $or: [
+      { name: { $regex: keyword, $options: 'i' } },
+      { name_en: { $regex: keyword, $options: 'i' } },
+      { category: { $regex: keyword, $options: 'i' } }
+    ]
   })
-  if (!restaurants.length) {
-    res.render('index', { restaurants: restaurantList.results, keyword: "請輸入正確關鍵字" })
-  } else {
-    res.render('index', { restaurants: restaurants, keyword: keyword })
-  }
+    .lean()
+    .then(restaurants => res.render('index', { restaurants, isSearchExist: restaurants.length, keyword }))
+    .catch(err => console.error(err))
 })
-**/
 app.get('/:restaurant_id', (req, res) => {
   const id = req.params.restaurant_id
   Restaurant.findById(id)
