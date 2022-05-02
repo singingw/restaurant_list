@@ -63,7 +63,7 @@ router.put('/:restaurant_id', (req, res) => {
       restaurant.description = updatedRest.description
       return restaurant.save()
     })
-    .then(() => res.redirect(`/${id}`))
+    .then(() => res.redirect(`/restaurant/${id}`))
     .catch(error => console.log(error))
 })
 module.exports = router
