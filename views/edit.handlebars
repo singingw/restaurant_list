@@ -19,7 +19,7 @@
     <div class="form-group row">
       <label for="category" class="col-sm-2 col-form-label">類別</label>
       <div class="col-sm-10">
-        <input list="categories" class="form-control" name="category" id="category" placeholder={{restaurant.category}}
+        <input list="categories" class="form-control" name="category" id="category" value={{restaurant.category}}
           required>
         <datalist id="categories">
           <option>中東料理</option>
@@ -76,7 +76,7 @@
       <label for="description" class="col-sm-2 col-form-label">簡介</label>
       <div class="col-sm-10">
         <textarea id="description" name="description" class="form-control" rows="3"
-          placeholder={{restaurant.description}} required></textarea>
+          required>{{restaurant.description}}</textarea>
       </div>
     </div>
 
