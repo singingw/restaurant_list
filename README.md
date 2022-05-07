@@ -12,27 +12,31 @@
 <img src="https://github.com/singingw/restaurant_List/blob/main/%E9%A4%90%E5%BB%B3%E7%9A%84%E8%A9%B3%E7%B4%B0%E8%B3%87%E8%A8%8A.PNG" width="49%"></p>
 
 ## 安裝與執行步驟
-１.  在終端機輸入指令 Clone 此專案至本機電腦
+1.  在終端機輸入指令 Clone 此專案至本機電腦
 ```js
-git clone https://github.com/singingw/restaurant_List.git
+git clone https://github.com/singingw/restaurant_list.git
 ```
-２.  移至檔案夾
+2.  移至檔案夾
 ```js
 cd restaurant_List (AC)
 ```
-３.  安裝相關套件
+3.  安裝相關套件
 ```js
 npm install
 ```
-４.  打開終端
+4.  運行種子數據
 ```js
-nodemon app.js
+node models/seeds/restaurantSeeder.js
 ```
-５.  使用瀏覽器開啟：http://localhost:3000 即可瀏覽本專案
+5.  打開終端
+```js
+npm run dev
+```
+6.  使用瀏覽器開啟：http://localhost:3000 即可瀏覽本專案
 
 ## 環境建置與需求
-１.  Node.js & npm - JavaScript 運行環境
-
-２.  Express.js - Web 應用程序框架
-
-３.  Express-Handlebars - 模板引擎
+1. Node.js & npm - JavaScript 運行環境
+2. Express.js - Web 應用程序框架
+3. Express-Handlebars - 模板引擎
+4. mongoDB 資料庫
+5. mongoose
