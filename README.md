@@ -18,7 +18,7 @@ git clone https://github.com/singingw/restaurant_list.git
 ```
 2.  移至檔案夾
 ```js
-cd restaurant_List (AC)
+cd restaurant_List
 ```
 3.  安裝相關套件
 ```js
