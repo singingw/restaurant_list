@@ -24,15 +24,19 @@ cd restaurant_List
 ```js
 npm install
 ```
-4.  運行種子數據
+4.  process.env.MONGODB_URI 環境變數的設定
+```js
+set MONGODB_URI = < 連線 mongoDB 的 URI > //密碼、資料庫名稱要自行更改
+```
+5.  運行種子數據
 ```js
 node models/seeds/restaurantSeeder.js
 ```
-5.  打開終端
+6.  打開終端
 ```js
 npm run dev
 ```
-6.  使用瀏覽器開啟：http://localhost:3000 即可瀏覽本專案
+7.  使用瀏覽器開啟：http://localhost:3000 即可瀏覽本專案
 
 ## 環境建置與需求
 1. Node.js & npm - JavaScript 運行環境
