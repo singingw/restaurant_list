@@ -23,7 +23,7 @@ router.get('/search', (req, res) => {
     ]
   })
     .lean()
-    .then(restaurants => res.render('index', { restaurants, isSearchExist: restaurants.length, keyword }))
+    .then(restaurants => res.render('index', { restaurants, keyword }))
     .catch(err => console.error(err))
 })
 router.get('/:restaurant_id', (req, res) => {
