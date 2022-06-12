@@ -4,12 +4,14 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
-
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}//判別開發環境
 const routes = require('./routes')
 
 const usePassport = require('./config/passport')
 require('./config/mongoose')
-const port = process.env.PORT || 3000
+const port = process.env.PORT 
 const app = express()
 
 app.use(express.static('public'))
@@ -19,7 +21,7 @@ app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
