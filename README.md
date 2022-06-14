@@ -1,6 +1,7 @@
 # restaurant_List 打造餐廳清單
 ## 功能描述
-* 使用者可在首頁看到所有的餐廳清單
+* 使用者可自行創建帳號，或使用 Facebook、Google 登入
+* 使用者可在首頁看到自己所有的餐廳清單
 * 以喜歡的排序方式或類別進行瀏覽
 * 可新增、編輯、刪除餐廳資訊
 * 點擊餐廳或更多可以看到此餐廳的詳細介紹
@@ -30,6 +31,7 @@ set MONGODB_URI = < 連線 mongoDB 的 URI > //密碼、資料庫名稱要自行
 ```
 5.  運行種子數據
 ```js
+node models/seeds/userSeeder.js
 node models/seeds/restaurantSeeder.js
 ```
 6.  打開終端
@@ -44,3 +46,4 @@ npm run dev
 3. Express-Handlebars - 模板引擎
 4. mongoDB 資料庫
 5. mongoose
+6. passport 
