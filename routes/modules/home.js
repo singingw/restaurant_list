@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
 })
 router.post('/filter', (req, res) => {
   const { sort, category, rating } = req.body
+  const userId = req.user._id
   const sortRule = {
     default: { _id: 'asc' },
     name_asc: { name: 'asc' },
@@ -18,8 +19,10 @@ router.post('/filter', (req, res) => {
     rating_asc: { rating: 'asc' },
     rating_desc: { rating: 'desc' }
   }
+
   Restaurant.find({
-    $and: [{ category: { $regex: category, $options: 'i' } },
+    $and: [{ userId },
+    { category: { $regex: category, $options: 'i' } },
     { rating: { $gte: rating } }]
   })
     .sort(sortRule[sort])
