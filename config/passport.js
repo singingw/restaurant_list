@@ -3,6 +3,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const User = require('../models/user')
 const FacebookStrategy = require('passport-facebook').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 
 module.exports = app => {
   // 初始化 Passport 模組
@@ -15,13 +16,13 @@ module.exports = app => {
       .then(user => {
         if (!user) {
           return done(null, false, { type: 'warning_msg', message: 'email 尚未註冊。' })
-        } 
+        }
         //bcrypt.compare 方法，用來判斷使用者登入時輸入的密碼，是否與資料庫裡的雜湊值一致
         return bcrypt.compare(password, user.password).then(isMatch => {
           if (!isMatch) {
             return done(null, false, { type: 'warning_msg', message: 'Email or Password incorrect.' })
           }
-        return done(null, user)
+          return done(null, user)
         })
       })
       .catch(err => done(err, false))
@@ -32,6 +33,31 @@ module.exports = app => {
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
     callbackURL: process.env.FACEBOOK_CALLBACK,
+    profileFields: ['email', 'displayName']
+  }, (accessToken, refreshToken, profile, done) => {
+    const { name, email } = profile._json
+    User.findOne({ email })
+      .then(user => {
+        if (user) return done(null, user)
+        const randomPassword = Math.random().toString(36).slice(-8)
+        bcrypt
+          .genSalt(10)
+          .then(salt => bcrypt.hash(randomPassword, salt))
+          .then(hash => User.create({
+            name,
+            email,
+            password: hash
+          }))
+          .then(user => done(null, user))
+          .catch(err => done(err, false))
+      })
+  }))
+
+  //Google 驗證
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK,
     profileFields: ['email', 'displayName']
   }, (accessToken, refreshToken, profile, done) => {
     const { name, email } = profile._json
