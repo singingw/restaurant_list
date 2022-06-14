@@ -1,21 +1,31 @@
 const Restaurant = require('../restaurant')
+const User = require('../user')
 const list = require('../../restaurant.json').results
 const db = require('../../config/mongoose')
 
-db.once('open', () => {
-  list.forEach(obj => {
-    Restaurant.create({
-      name: obj.name,
-      name_en: obj.name_en,
-      category: obj.category,
-      location: obj.location,
-      google_map: obj.google_map,
-      phone: obj.phone,
-      rating: obj.rating,
-      description: obj.description,
-      image: obj.image
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+db.once('open', async () => {
+  const seed = []
+  await User.find()
+    .then(users => {
+      for (let i = 0; i < 6; i++) {
+        if (i > 2) {
+          list[i].userId = users[1]._id
+        } else {
+          list[i].userId = users[0]._id
+        }
+        seed.push(list[i])
+      }
+      return seed
     })
-  })
-  console.log('done')
+    .then(async (seed) => {
+      await Restaurant.create(seed)
+      db.close()
+      process.exit()
+    })
+    .catch(err => console.log(err))
 })
 
