@@ -1,11 +1,11 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const Restaurant = require('../restaurant')
 const User = require('../user')
 const list = require('../../restaurant.json').results
 const db = require('../../config/mongoose')
-
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 
 db.once('open', async () => {
   const seed = []
