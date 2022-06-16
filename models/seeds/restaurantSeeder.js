@@ -23,6 +23,7 @@ db.once('open', async () => {
     })
     .then(async (seed) => {
       await Restaurant.create(seed)
+        .catch(err => console.log(err))
       db.close()
       process.exit()
     })
